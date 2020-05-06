@@ -29,8 +29,7 @@ def get_symbol_list(symbol_data, exchange_name):
         symbol_data_dict['sector'] = row[6]
         symbol_data_dict['industry'] = row[7]
      
-        symbol_list.append(symbol_data_dict)
-    return symbol_list
+        yield symbol_data_dict
 
 
 def save_file(file_path, file_data):
