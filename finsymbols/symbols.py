@@ -2,6 +2,7 @@ import pprint
 import sys
 from bs4 import BeautifulSoup
 from finsymbols.symbol_helper import *
+from itertools import islice
 
 
 def get_sp500_symbols():
@@ -10,8 +11,8 @@ def get_sp500_symbols():
     symbol_table = wiki_soup.find(attrs={'class': 'wikitable sortable'})
 
     symbol_data_list = list()
-
-    for symbol in symbol_table.find_all("tr"):
+    
+    for symbol in islice(symbol_table.find_all("tr"),1,None):
         symbol_data_content = dict()
         symbol_raw_data = symbol.find_all("td")
         td_count = 0
@@ -34,9 +35,8 @@ def get_sp500_symbols():
 
             td_count += 1
 
-        symbol_data_list.append(symbol_data_content)
+        yield symbol_data_content
 
-    return symbol_data_list[1::]
 
 
 def get_nyse_symbols():
